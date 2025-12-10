@@ -1,4 +1,6 @@
 # AWS EC2 구성을 코드로 작성
+
+
 provider "aws" {
     region = "us-east-2"
 }
