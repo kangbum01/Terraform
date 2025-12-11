@@ -60,18 +60,18 @@ resource "aws_vpc_security_group_egress_rule" "mySG_all" {
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/key_pair
 resource "aws_key_pair" "mykeypair" {
   key_name   = "mykeypair"
-  region = "us-east-2"
+  region     = "us-east-2"
   public_key = file("~/.ssh/mykeypair.pub")
 }
 
 resource "aws_instance" "myEC2" {
-  ami           = "ami-00e428798e77d38d9"
-  instance_type = "t3.micro"
-  subnet_id = aws_subnet.myPubSN.id
-  vpc_security_group_ids = [aws_security_group.mySG.id]
-  key_name = "mykeypair"
+  ami                         = "ami-00e428798e77d38d9"
+  instance_type               = "t3.micro"
+  subnet_id                   = aws_subnet.myPubSN.id
+  vpc_security_group_ids      = [aws_security_group.mySG.id]
+  key_name                    = "mykeypair"
   user_data_replace_on_change = true
-  user_data = <<-EOF
+  user_data                   = <<-EOF
         #!/bin/bash
         dnf install -y httpd mod_ssl
         echo "My Web Server Test Page" > /var/www/html/index.html

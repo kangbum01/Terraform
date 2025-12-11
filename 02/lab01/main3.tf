@@ -15,7 +15,7 @@
 # EIP 생성
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eip
 resource "aws_eip" "myEIP" {
-  domain   = "vpc"
+  domain = "vpc"
   tags = {
     Name = "myEIP"
   }
@@ -39,7 +39,7 @@ resource "aws_nat_gateway" "myNAT-GW" {
 resource "aws_subnet" "myPriSN" {
   vpc_id     = aws_vpc.myVPC.id
   cidr_block = "10.0.2.0/24"
-  
+
   tags = {
     Name = "myPriSN"
   }
@@ -121,13 +121,13 @@ resource "aws_vpc_security_group_egress_rule" "allow_all" {
 # * keypair 사용 - mykeypair
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance
 resource "aws_instance" "myEC2-2" {
-  ami           = "ami-00e428798e77d38d9"
-  instance_type = "t3.micro"
-  subnet_id = aws_subnet.myPriSN.id
-  vpc_security_group_ids = [aws_security_group.mySG2.id]
-  key_name = "mykeypair"
+  ami                         = "ami-00e428798e77d38d9"
+  instance_type               = "t3.micro"
+  subnet_id                   = aws_subnet.myPriSN.id
+  vpc_security_group_ids      = [aws_security_group.mySG2.id]
+  key_name                    = "mykeypair"
   user_data_replace_on_change = true
-  user_data= <<-EOF
+  user_data                   = <<-EOF
         #!/bin/bash
         dnf install -y httpd mod_ssl
         echo "My Web Server2 Test Page" > /var/www/html/index.html

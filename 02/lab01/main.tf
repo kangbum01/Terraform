@@ -13,7 +13,7 @@ provider "aws" {
 
 # 2. VPC 생성
 resource "aws_vpc" "myVPC" {
-  cidr_block       = "10.0.0.0/16"
+  cidr_block           = "10.0.0.0/16"
   enable_dns_hostnames = true
 
   tags = {
@@ -35,8 +35,8 @@ resource "aws_internet_gateway" "myIGW" {
 # * 공인 IP 활성
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet
 resource "aws_subnet" "myPubSN" {
-  vpc_id     = aws_vpc.myVPC.id
-  cidr_block = "10.0.1.0/24"
+  vpc_id                  = aws_vpc.myVPC.id
+  cidr_block              = "10.0.1.0/24"
   map_public_ip_on_launch = true
   tags = {
     Name = "myPubSN"
