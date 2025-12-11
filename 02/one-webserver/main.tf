@@ -1,6 +1,14 @@
 # 단일 웹 서버 배포
+###############################################
+# 1. terraform/provider
+# 2. EC2 Instance 생성(user_data(WEB:8080))
+# * 1) SG(8080)
+# * 2) EC2 생성
+################################################
+
+
 #
-# provider
+# terraform/provider
 #
 terraform {
   required_providers {
@@ -16,8 +24,36 @@ provider "aws" {
 }
 
 #
-# resource
+# 2. resource -EC2 Instance 생성
 #
+
+# 보안 그룹(security group) 설정
+# 보안 그룹 생성
+resource "aws_security_group" "allow_8080" {
+  name        = "allow_8080"
+  description = "Allow TLS inbound traffic and all outbound traffic"
+  tags = {
+    Name = "allow_8080"
+  }
+} 
+
+# ingress 설정
+resource "aws_vpc_security_group_ingress_rule" "allow_8080_http" {
+  security_group_id = aws_security_group.allow_8080.id # aws_security_group의 allow_8080이름을 가진 보안 그룹의 id
+  cidr_ipv4         = "0.0.0.0/0"                      # 클라이언트
+  from_port         = 8080
+  ip_protocol       = "tcp"
+  to_port           = 8080
+}
+
+# egress 설정
+resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
+  security_group_id = aws_security_group.allow_8080.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "-1" # -1번은 ALL을 의미한다
+}
+
+# EC2 생성
 resource "aws_instance" "myinstance" {
   ami                    = "ami-0f5fcdfbd140e4ab7"
   instance_type          = "t3.micro"
@@ -34,30 +70,4 @@ resource "aws_instance" "myinstance" {
   tags = {
     Name = "My First Instnace"
   }
-}
-
-# 보안 그룹(security group) 설정
-# 보안 그룹 생성
-resource "aws_security_group" "allow_8080" {
-  name        = "allow_8080"
-  description = "Allow TLS inbound traffic and all outbound traffic"
-  tags = {
-    Name = "allow_8080"
-  }
-}
-
-# ingress 설정
-resource "aws_vpc_security_group_ingress_rule" "allow_8080_http" {
-  security_group_id = aws_security_group.allow_8080.id # aws_security_group의 allow_8080이름을 가진 보안 그룹의 id
-  cidr_ipv4         = "0.0.0.0/0"                      # 클라이언트
-  from_port         = 8080
-  ip_protocol       = "tcp"
-  to_port           = 8080
-}
-
-# egress 설정
-resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
-  security_group_id = aws_security_group.allow_8080.id
-  cidr_ipv4         = "0.0.0.0/0"
-  ip_protocol       = "-1" # -1번은 ALL을 의미한다
 }
