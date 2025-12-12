@@ -6,3 +6,5 @@
   * main - VPC, IGW, PubSN, PubSN-RT
   * main2 - + EC2(WebServer(user_data)) 
   * main3 - + PriSN, PriSN-RT, NAT-GW, EC2(WebServer)
+### 02) lab02
+  * ec2 - Data Source 실습
