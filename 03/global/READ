@@ -1,0 +1,10 @@
+AWS에 원격 S3 생성 실습
+s3 : AWS에 원격으로 S3 및 Dynamodb 생성, 공용 폴더 - backend
+      -> s3에는 tfstate 파일이 저장
+      -> Dynamodb에는 lock.hcl파일이 저장
+instance : 사용자들
+
+제거 순서: instance -> s3
+s3 bucket 삭제 시 장애 발생 순서
+1. tf status list -> tf status rm 남은 리스트 이름
+2. 직접 지우기
