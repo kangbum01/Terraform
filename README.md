@@ -15,3 +15,22 @@
   * main3 - + PriSN, PriSN-RT, NAT-GW, EC2(WebServer)
 ### 02) lab02
   * ec2 - Data Source 실습
+
+## 03
+
+## mini project1
+ * provier 설정
+ * VPC 설정
+ * Public subnet 설정
+ * Internet Gateway 설정
+ * Public Routing 설정
+ * Public Routing Table Association(Public subnet <-> Public Routing) 설정
+ * Public Security Group 설정
+ 
+ * AMI Data Source 설정
+ * SSH Key 생성
+ * EC2 Instance 생성
+ 
+ * User Data 
+ 	* docker 설치
+ * 테스트 (SSH Connection 연결 -> docker 실행)
