@@ -1,0 +1,4 @@
+● 단순한 모듈을 직접 만들어 보는 실습
+모듈 개발
+vpc-create/dev에 main.tf(root 모듈)를 생성 후 source로 지정해야한다
+모듈 생성 시 variables, outputs를 많이 만들면 좋다
